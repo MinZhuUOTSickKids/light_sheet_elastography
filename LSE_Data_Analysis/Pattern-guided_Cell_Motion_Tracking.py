@@ -58,7 +58,11 @@ red_cdict = {
 				  (1, 1.0, 1.0)),
 			}
 red_cmap = LinearSegmentedColormap('red_cmap', red_cdict)
-cm.register_cmap(cmap=red_cmap)
+# cm.register_cmap(cmap=red_cmap)
+try:
+	matplotlib.colormaps.register(red_cmap)
+except:
+	pass
 
 green_cdict = {
 		'red':   ((0, 0.0, 0.0),
@@ -71,7 +75,11 @@ green_cdict = {
 				  (1, 1.0, 1.0)),
 			}
 green_cmap = LinearSegmentedColormap('green_cmap', green_cdict)
-cm.register_cmap(cmap=green_cmap)
+# cm.register_cmap(cmap=green_cmap)
+try:
+	matplotlib.colormaps.register(green_cmap)
+except:
+	pass
 
 blue_cdict = {
 		'red':   ((0, 0.0, 0.0),
@@ -84,7 +92,11 @@ blue_cdict = {
 				  (1, 1.0, 1.0)),
 			}
 blue_cmap = LinearSegmentedColormap('blue_cmap', blue_cdict)
-cm.register_cmap(cmap=blue_cmap)
+# cm.register_cmap(cmap=blue_cmap)
+try:
+	matplotlib.colormaps.register(blue_cmap)
+except:
+	pass
 
 transparent_cdict = {
 		'red':   ((0, 0.0, 0.0),
@@ -98,7 +110,11 @@ transparent_cdict = {
 			}
 transparent_cmap = LinearSegmentedColormap('transparent_cmap',
 											transparent_cdict)
-cm.register_cmap(cmap=transparent_cmap)
+# cm.register_cmap(cmap=transparent_cmap)
+try:
+	matplotlib.colormaps.register(transparent_cmap)
+except:
+	pass
 
 ################################################################################
 # remove tree method for pathlib #
