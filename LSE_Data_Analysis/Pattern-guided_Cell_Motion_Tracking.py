@@ -479,7 +479,7 @@ def clear_layout (layout):
 ############################
 
 class MPLCanvas(FigureCanvas):
-	def __init__ (self, parent=None, width=10.73, height=10.73, dpi=100):
+	def __init__ (self, parent=None, width=10, height=10, dpi=100):
 		self.fig = Figure(figsize=(width, height), dpi=dpi)
 		self.ax = self.fig.add_subplot(111)
 		FigureCanvas.__init__(self, self.fig)
@@ -1625,3 +1625,5 @@ if __name__ == "__main__":
 
 ################################################################################
 # EOF
+
+# to implement phase analysis and stiffness map rendering functions.
