@@ -189,6 +189,8 @@ class zip_tiff_stack:
 		self.z_values = np.unique(self.z_list)
 		image = Image.open(self.tif_dir/self.name_list[0])
 		image_array = np.array(image)
+		if len(image_array.shape) == 2:
+			image_array = image_array[:,:,np.newaxis]
 		test = np.sum(image_array, axis=(0,1))
 		self.mask = (test != 0)
 		if len(test) == 3:
@@ -204,9 +206,13 @@ class zip_tiff_stack:
 		print(self.channel_names)
 		self.physical_pixel_sizes = [1,1,1]
 	def get_image_data(self, string, C = 0, T = 0, Z = 0):
-		file_index = np.argmax((self.t_list == T) & (self.z_list == Z))
+		file_index = np.argmax(np.logical_and((self.t_list == T+1),
+											  (self.z_list == Z+1)))
+	#	print((self.tif_dir/self.name_list[file_index]))
 		image_array = np.array(
 						Image.open(self.tif_dir/self.name_list[file_index]))
+		if len(image_array.shape) == 2:
+			image_array = image_array[:,:,np.newaxis]
 		if string == 'YX':
 			return image_array[:,:,C]
 		else:
@@ -1578,10 +1584,16 @@ class Window(QWidget):
 			return
 	#	results = np.around(self.fine_results).astype(int) + \
 	#								self.track_points[np.newaxis,:,:]
-		results = self.fine_results + \
+		results_shape = self.fine_results.shape
+		results_shape = list(results_shape)
+		results_shape[0] += 1
+		results_shape = tuple(results_shape)
+		results = np.zeros(results_shape, dtype = float)
+		results[0] = self.track_points[:,:].astype(float)
+		results[1:] = self.fine_results + \
 							self.track_points[np.newaxis,:,:].astype(float)
 		if len(self.coarse_results) == len(self.fine_results):
-			results += self.coarse_results[:,np.newaxis,:]
+			results[1:] += self.coarse_results[:,np.newaxis,:]
 		results = results*self.scale[0:2]
 		output_array = np.zeros((results.shape[0]*results.shape[1],5),
 								dtype = float)
